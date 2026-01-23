@@ -1,0 +1,20 @@
+{
+  "name": "expressjs-api",
+  "version": "1.0.0",
+  "description": "Demo API on the Express JS",
+  "homepage": "https://github.com/vlasnet/ExpressJS-API#readme",
+  "bugs": {
+    "url": "https://github.com/vlasnet/ExpressJS-API/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vlasnet/ExpressJS-API.git"
+  },
+  "license": "ISC",
+  "author": "Serhii Vlasiuk",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
