@@ -13,8 +13,18 @@
   "license": "ISC",
   "author": "Serhii Vlasiuk",
   "type": "module",
-  "main": "index.js",
+  "main": "src/main.ts",
   "scripts": {
+    "start": "tsc && node dist/main.js",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "tslog": "^4.10.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.0.10"
   }
 }
