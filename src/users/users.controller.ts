@@ -9,25 +9,28 @@ import type { IUserController } from './users.controller.interface.js';
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
-    constructor( @inject(TYPES.ILogger) private loggerService: ILogger ) {
-        super(loggerService);
-        this.bindRoutes([ {
-            path: '/register',
-            method: 'post',
-            func: this.register,
-        }, {
-            path: '/login',
-            method: 'post',
-            func: this.login,
-        } ]);
-    }
+	constructor(@inject(TYPES.ILogger) private loggerService: ILogger) {
+		super(loggerService);
+		this.bindRoutes([
+			{
+				path: '/register',
+				method: 'post',
+				func: this.register,
+			},
+			{
+				path: '/login',
+				method: 'post',
+				func: this.login,
+			},
+		]);
+	}
 
-    login( req: Request, res: Response, next: NextFunction ) {
-        // this.ok(res, 'Login');
-        next(new HTTPError(401, 'Not Authorized', 'login'));
-    }
+	login(req: Request, res: Response, next: NextFunction): void {
+		// this.ok(res, 'Login');
+		next(new HTTPError(401, 'Not Authorized', 'login'));
+	}
 
-    register( req: Request, res: Response, next: NextFunction ) {
-        this.ok(res, 'Register');
-    }
+	register(req: Request, res: Response, next: NextFunction): void {
+		this.ok(res, 'Register');
+	}
 }

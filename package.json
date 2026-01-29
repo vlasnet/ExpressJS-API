@@ -1,32 +1,46 @@
 {
-  "name": "expressjs-api",
-  "version": "1.0.0",
-  "description": "Demo API on the Express JS",
-  "homepage": "https://github.com/vlasnet/ExpressJS-API#readme",
-  "bugs": {
-    "url": "https://github.com/vlasnet/ExpressJS-API/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vlasnet/ExpressJS-API.git"
-  },
-  "license": "ISC",
-  "author": "Serhii Vlasiuk",
-  "type": "module",
-  "main": "src/main.ts",
-  "scripts": {
-    "start": "tsc && node dist/main.js",
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "express": "^5.2.1",
-    "inversify": "^7.11.0",
-    "reflect-metadata": "^0.2.2",
-    "tslog": "^4.10.2"
-  },
-  "devDependencies": {
-    "@types/express": "^5.0.6",
-    "@types/node": "^25.0.10"
-  }
+	"name": "expressjs-api",
+	"version": "1.0.0",
+	"description": "Demo API on the Express JS",
+	"homepage": "https://github.com/vlasnet/ExpressJS-API#readme",
+	"bugs": {
+		"url": "https://github.com/vlasnet/ExpressJS-API/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/vlasnet/ExpressJS-API.git"
+	},
+	"license": "ISC",
+	"author": "Serhii Vlasiuk",
+	"type": "module",
+	"main": "src/main.ts",
+	"scripts": {
+		"start": "tsc && node dist/main.js",
+		"build": "tsc",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint ./src/**",
+		"lint:fix": "eslint ./src/** --fix",
+		"eslint": "eslint --max-warnings 0 --ext .ts,.tsx,.jsx,.js .",
+		"prettier": "prettier \"**/*.{ts,tsx,js,jsx,scss,html,json,md}\"",
+		"prettier:check": "npm run prettier -- --check",
+		"prettier:fix": "npm run prettier -- --write",
+		"review": "npm run prettier:fix && npm run lint && npm run tsc"
+	},
+	"dependencies": {
+		"express": "^5.2.1",
+		"inversify": "^7.11.0",
+		"reflect-metadata": "^0.2.2",
+		"tslog": "^4.10.2"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.39.2",
+		"@types/express": "^5.0.6",
+		"@types/node": "^25.0.10",
+		"eslint": "^9.39.2",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-prettier": "^5.5.5",
+		"prettier": "^3.8.1",
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.54.0"
+	}
 }

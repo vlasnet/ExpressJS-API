@@ -1,73 +1,74 @@
-function Component( id: number ) {
-    console.log('init Component');
-    return function <T extends { new( ...args: any[] ): { id: number } }>( target: T ) {
-        console.log('return Component class');
-        return class extends target {
-            constructor( ...args: any[] ) {
-                super(...args);
-                this.id = id;
-            }
-        };
-    };
+type Constructor<T = object> = new (...args: any[]) => T;
+
+function Component(id: number) {
+	console.log('init Component');
+
+	return function <T extends Constructor>(
+		target: T,
+	): new (...args: ConstructorParameters<T>) => InstanceType<T> & { id: number } {
+		console.log('return Component class');
+
+		const Result = class extends target {
+			id: number = id;
+		};
+
+		return Result as unknown as new (
+			...args: ConstructorParameters<T>
+		) => InstanceType<T> & { id: number };
+	};
 }
 
 function Logger() {
-    console.log('init Logger');
-    return function <T extends { new( ...args: any[] ): {} }>( target: T ) {
-        console.log('return Logger class');
-        return class extends target {
+	console.log('init Logger');
 
-        };
-    };
+	return function <T extends Constructor>(target: T): T {
+		console.log('return Logger class');
+		return class extends target {} as T;
+	};
 }
 
-function Method(
-    target: Object,
-    propertyKey: string,
-    propertyDescriptor: PropertyDescriptor
-) {
-    console.log(propertyKey);
-    propertyDescriptor.value = function ( ...args: unknown[] ) {
-        if ( typeof args[0] === 'number' ) {
-            return args[0] * 10;
-        }
-    };
+function Method(target: object, propertyKey: string, propertyDescriptor: PropertyDescriptor): void {
+	console.log(propertyKey);
+	propertyDescriptor.value = function (...args: unknown[]): number | undefined {
+		if (typeof args[0] === 'number') {
+			return args[0] * 10;
+		}
+	};
 }
 
-function Prop( target: Object, propertyKey: string ) {
-    let value: number;
-    console.log('!propertyKey!', propertyKey);
+function Prop(target: object, propertyKey: string): void {
+	let value: number;
+	console.log('!propertyKey!', propertyKey);
 
-    const getter = () => {
-        console.log('Getter');
-        return value;
-    };
+	const getter = (): number => {
+		console.log('Getter');
+		return value;
+	};
 
-    const setter = ( newValue: number ) => {
-        console.log('Setter');
-        value = newValue;
-    };
+	const setter = (newValue: number): void => {
+		console.log('Setter');
+		value = newValue;
+	};
 
-    Object.defineProperty(target, propertyKey, { get: getter, set: setter });
+	Object.defineProperty(target, propertyKey, { get: getter, set: setter });
 }
 
-function Param( target: Object, propertyKey: string, index: number ) {
-    console.log('Param ===>', propertyKey, index);
+function Param(target: object, propertyKey: string, index: number): void {
+	console.log('Param ===>', propertyKey, index);
 }
 
 @Logger()
 @Component(50)
 export class User {
-    @Prop
-    declare id: number;
+	@Prop
+	declare id: number;
 
-    @Method
-    updateId( @Param newId: number ) {
-        this.id = newId;
-        return this.id;
-    }
+	@Method
+	updateId(@Param newId: number): number {
+		this.id = newId;
+		return this.id;
+	}
 }
 
 console.log(new User().id);
 console.log(new User().updateId(20));
-
