@@ -17,6 +17,7 @@
 	"scripts": {
 		"start": "tsc && node dist/main.js",
 		"dev": "NODE_NO_WARNINGS=1 nodemon --exec node --loader ts-node/esm src/main.ts",
+		"dev:inspect": "NODE_NO_WARNINGS=1 nodemon -e ts,json --exec node --inspect=localhost:9229 -r ts-node/register --loader ts-node/esm src/main.ts",
 		"build": "tsc",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./src/**",
@@ -25,7 +26,8 @@
 		"prettier": "prettier \"**/*.{ts,tsx,js,jsx,scss,html,json,md}\"",
 		"prettier:check": "npm run prettier -- --check",
 		"prettier:fix": "npm run prettier -- --write",
-		"review": "npm run prettier:fix && npm run lint && npm run build"
+		"review": "npm run prettier:fix && npm run lint && npm run build",
+		"clinic": "clinic doctor --on-port 'autocannon -m POST localhost:$PORT/users/register' -- node dist/main.js"
 	},
 	"dependencies": {
 		"express": "^5.2.1",
