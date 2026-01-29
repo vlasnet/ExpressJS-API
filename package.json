@@ -16,6 +16,7 @@
 	"main": "src/main.ts",
 	"scripts": {
 		"start": "tsc && node dist/main.js",
+		"dev": "NODE_NO_WARNINGS=1 nodemon --exec node --loader ts-node/esm src/main.ts",
 		"build": "tsc",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./src/**",
@@ -24,7 +25,7 @@
 		"prettier": "prettier \"**/*.{ts,tsx,js,jsx,scss,html,json,md}\"",
 		"prettier:check": "npm run prettier -- --check",
 		"prettier:fix": "npm run prettier -- --write",
-		"review": "npm run prettier:fix && npm run lint && npm run tsc"
+		"review": "npm run prettier:fix && npm run lint && npm run build"
 	},
 	"dependencies": {
 		"express": "^5.2.1",
@@ -39,7 +40,9 @@
 		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-prettier": "^5.5.5",
+		"nodemon": "^3.1.11",
 		"prettier": "^3.8.1",
+		"ts-node": "^10.9.2",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.54.0"
 	}
