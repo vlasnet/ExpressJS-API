@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { inject, injectable } from 'inversify';
 import type { Express } from 'express';
-import express from 'express';
+import express, { json, urlencoded } from 'express';
 import type { Server } from 'http';
 import type { UserController } from './users/users.controller.js';
 import type { ExceptionFilter } from './errors/exception.filter.js';
@@ -23,6 +23,11 @@ export class App {
 		this.port = 8000;
 	}
 
+	useMiddleware(): void {
+		this.app.use(json());
+		this.app.use(urlencoded({ extended: true }));
+	}
+
 	useRoutes(): void {
 		this.app.use('/users', this.userController.router);
 	}
@@ -32,6 +37,7 @@ export class App {
 	}
 
 	public async init(): Promise<void> {
+		this.useMiddleware();
 		this.useRoutes();
 		this.useExceptionFilters();
 		this.server = this.app.listen(this.port);

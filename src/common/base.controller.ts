@@ -31,10 +31,14 @@ export abstract class BaseController {
 
 	protected bindRoutes(routes: IControllerRoute[]): void {
 		for (const route of routes) {
-			const handler = route.func.bind(this);
-
 			this.logger.log(`[${route.method}] ${route.path}`);
-			this.router[route.method](route.path, handler);
+
+			const middlewares = route.middlewares?.map((middleware) =>
+				middleware.execute.bind(middleware),
+			);
+			const handler = route.func.bind(this);
+			const pipeline = middlewares ? [...middlewares, handler] : handler;
+			this.router[route.method](route.path, pipeline);
 		}
 	}
 }
