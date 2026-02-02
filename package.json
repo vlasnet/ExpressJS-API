@@ -19,6 +19,7 @@
 		"dev": "NODE_NO_WARNINGS=1 nodemon --exec node --loader ts-node/esm src/main.ts",
 		"dev:inspect": "NODE_NO_WARNINGS=1 nodemon -e ts,json --exec node --inspect=localhost:9229 -r ts-node/register --loader ts-node/esm src/main.ts",
 		"build": "tsc",
+		"generate": "prisma generate",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"lint": "eslint ./src/**",
 		"lint:fix": "eslint ./src/** --fix",
@@ -30,6 +31,7 @@
 		"clinic": "clinic doctor --on-port 'autocannon -m POST localhost:$PORT/users/register' -- node dist/main.js"
 	},
 	"dependencies": {
+		"@prisma/client": "^3.3.0",
 		"bcryptjs": "^3.0.3",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.3",
@@ -49,6 +51,7 @@
 		"eslint-plugin-prettier": "^5.5.5",
 		"nodemon": "^3.1.11",
 		"prettier": "^3.8.1",
+		"prisma": "^3.3.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.54.0"
