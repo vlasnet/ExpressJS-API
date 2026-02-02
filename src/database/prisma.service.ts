@@ -1,5 +1,6 @@
-import { PrismaClient } from '../generated/prisma/index.js';
 import { inject, injectable } from 'inversify';
+import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3';
+import { PrismaClient } from '../generated/prisma/client.js';
 import { TYPES } from '../types.js';
 import type { ILogger } from '../logger/logger.interface.js';
 
@@ -8,7 +9,10 @@ export class PrismaService {
 	client: PrismaClient;
 
 	constructor(@inject(TYPES.ILogger) private logger: ILogger) {
-		this.client = new PrismaClient();
+		const adapter = new PrismaBetterSqlite3({
+			url: 'file:./prisma/dev.db',
+		});
+		this.client = new PrismaClient({ adapter });
 	}
 
 	async connect(): Promise<void> {
