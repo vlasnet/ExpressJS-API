@@ -5,13 +5,15 @@ import { UserController } from './users/users.controller.js';
 import { LoggerService } from './logger/logger.service.js';
 import { UsersService } from './users/users.service.js';
 import { ConfigService } from './config/config.service.js';
+import { PrismaService } from './database/prisma.service.js';
+import { UsersRepository } from './users/dto/users.repository.js';
 import { TYPES } from './types.js';
 import type { ILogger } from './logger/logger.interface.js';
 import type { IExceptionFilter } from './errors/exception.filter.interface.js';
 import type { IUserService } from './users/dto/users.service.interface.js';
 import type { IUserController } from './users/users.controller.interface.js';
 import type { IConfigService } from './config/confige.service.interface.js';
-import { PrismaService } from './database/prisma.service.js';
+import type { IUsersRepository } from './users/dto/users.repository.interface.js';
 
 interface IBootstrapReturn {
 	appContainer: Container;
@@ -25,6 +27,7 @@ export const appBindings = new ContainerModule((options: ContainerModuleLoadOpti
 	options.bind<IUserService>(TYPES.UserService).to(UsersService).inSingletonScope();
 	options.bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
 	options.bind<PrismaService>(TYPES.PrismaService).to(PrismaService).inSingletonScope();
+	options.bind<IUsersRepository>(TYPES.UsersRepository).to(UsersRepository).inSingletonScope();
 	options.bind<App>(TYPES.Application).to(App).inSingletonScope();
 });
 
