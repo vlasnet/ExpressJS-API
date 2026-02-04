@@ -3,6 +3,7 @@ import { inject, injectable } from 'inversify';
 import jwt from 'jsonwebtoken';
 import { BaseController } from '../common/base.controller.js';
 import { ValidateMiddleware } from '../common/validate.middleware.js';
+import { AuthGuard } from '../common/auth.guard.js';
 import type { UserRegisterDto } from './dto/user-register.dto.js';
 import { UserRegisterDto as DtoUserRegister } from './dto/user-register.dto.js';
 import type { UserLoginDto } from './dto/user-login.dto.js';
@@ -40,7 +41,7 @@ export class UserController extends BaseController implements IUserController {
 				path: '/info',
 				method: 'get',
 				func: this.info,
-				middlewares: [],
+				middlewares: [new AuthGuard()],
 			},
 		]);
 	}
@@ -75,7 +76,8 @@ export class UserController extends BaseController implements IUserController {
 	}
 
 	async info(req: Request, res: Response, next: NextFunction): Promise<void> {
-		this.ok(res, { email: (req as AuthenticatedRequest).user });
+		const currentUser = await this.userService.getUserInfo((req as AuthenticatedRequest).user);
+		this.ok(res, { id: currentUser?.id, name: currentUser?.name, email: currentUser?.email });
 	}
 
 	private signJWT(email: string, secret: string): Promise<string> {
