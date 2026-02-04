@@ -46,5 +46,7 @@
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"strictPropertyInitialization": false
-	}
+	},
+
+	"include": ["src", "types"]
 }

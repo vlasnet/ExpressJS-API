@@ -11,7 +11,7 @@ import { HTTPError } from '../errors/http-error.js';
 import { TYPES } from '../types.js';
 import type { NextFunction, Request, Response } from 'express';
 import type { ILogger } from '../logger/logger.interface.js';
-import type { IUserController } from './users.controller.interface.js';
+import type { AuthenticatedRequest, IUserController } from './users.controller.interface.js';
 import type { IConfigService } from '../config/confige.service.interface';
 import type { IUserService } from './dto/users.service.interface';
 
@@ -35,6 +35,12 @@ export class UserController extends BaseController implements IUserController {
 				method: 'post',
 				func: this.login,
 				middlewares: [new ValidateMiddleware(DtoUserLogin)],
+			},
+			{
+				path: '/info',
+				method: 'get',
+				func: this.info,
+				middlewares: [],
 			},
 		]);
 	}
@@ -66,6 +72,10 @@ export class UserController extends BaseController implements IUserController {
 		}
 
 		this.ok(res, { id: newUser.id, name: newUser.name, email: newUser.email });
+	}
+
+	async info(req: Request, res: Response, next: NextFunction): Promise<void> {
+		this.ok(res, { email: (req as AuthenticatedRequest).user });
 	}
 
 	private signJWT(email: string, secret: string): Promise<string> {

@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { inject, injectable } from 'inversify';
 import type { Express } from 'express';
 import express, { json, urlencoded } from 'express';
+import { AuthMiddleware } from './common/auth.middleware.js';
 import { TYPES } from './types.js';
 import type { Server } from 'http';
 import type { UserController } from './users/users.controller.js';
@@ -30,6 +31,8 @@ export class App {
 	useMiddleware(): void {
 		this.app.use(json());
 		this.app.use(urlencoded({ extended: true }));
+		const authMiddleware = new AuthMiddleware(this.configService.get('SECRET'));
+		this.app.use(authMiddleware.execute.bind(authMiddleware));
 	}
 
 	useRoutes(): void {
