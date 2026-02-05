@@ -9,11 +9,8 @@
 		// See also https://aka.ms/tsconfig/module
 		"module": "ESNext",
 		"target": "ES2023",
-		"types": [],
-		// For nodejs:
-		// "lib": ["esnext"],
-		// "types": ["node"],
-		// and npm install -D @types/node
+		"lib": ["ES2023"],
+		"types": ["jest", "node"],
 
 		// Other Outputs
 		"sourceMap": true,
